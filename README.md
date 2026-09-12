@@ -1,169 +1,219 @@
-# End-to-End Retail Sales & Customer Intelligence Analytics
+# Retail Sales & Customer Intelligence Platform
 
-A production-grade, next-level data analytics and data science portfolio project. This repository implements a complete analytical pipeline—transforming raw transactional CRM/ERP data into a star schema warehouse, training machine learning models for customer segmentation, and presenting insights through a glassmorphic React dashboard containerized with Docker and ready for direct Vercel deployment.
+[![Python 3.12](https://img.shields.io/badge/Python-3.12-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
+[![DuckDB](https://img.shields.io/badge/Engine-DuckDB-FFF000?style=flat-square&logo=duckdb&logoColor=black)](https://duckdb.org/)
+[![React 19](https://img.shields.io/badge/Frontend-React_19-61DAFB?style=flat-square&logo=react&logoColor=black)](https://react.dev/)
+[![Vite 8](https://img.shields.io/badge/Build-Vite_8-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Docker](https://img.shields.io/badge/Container-Docker-2496ED?style=flat-square&logo=docker&logoColor=white)](https://www.docker.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.style=flat-square)](LICENSE)
+
+An enterprise-grade data engineering, machine learning, and business intelligence platform. This repository implements an end-to-end medallion data lakehouse pipeline—transforming raw CRM and ERP transactional data into a Gold star-schema warehouse, training unsupervised machine learning models for customer segmentation, forecasting 12-month Customer Lifetime Value (CLV), and presenting actionable insights via a human-designed enterprise analytics web dashboard.
 
 ---
 
-## 🚀 Project Architecture
+## 🏛️ Medallion Architecture & Data Pipeline
 
 ```text
-  Raw CSV Data (CRM & ERP)
-             │
-             ▼  [Step 1: SQL ETL & Cleaning via DuckDB]
-   Silver Schema Tables
-             │
-             ▼  [Step 2: Star Schema Modeling]
-   Gold Schema (Fact & Dimensions)
-             │
-             ├──► [Step 3: Machine Learning Segmentation (K-Means)]
-             └──► [Step 4: Predictive CLV Modeling (Gradient Boosting)]
-             │
-             ▼  [Step 5: SQL Export Pipeline]
-      Static JSON Datasets (dashboard/public/data/)
-             │
-             ▼  [Step 6: Presentation Layer]
-   Glassmorphic React + Vite Web App
-             │
-     ┌───────┴───────┐
-     ▼               ▼
-[Vercel Deploy]  [Docker Container]
+                               ┌────────────────────────────────────────┐
+                               │   RAW DATA SOURCES (CRM & ERP CSVs)    │
+                               └───────────────────┬────────────────────┘
+                                                   │
+                                                   ▼
+┌─────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ BRONZE SCHEMA (Ingestion)                                                                           │
+│   • crm_cust_info   • crm_prd_info   • crm_sales_details   • erp_cust_az12   • erp_loc_a101   • erp_px │
+└──────────────────────────────────────────────────┬──────────────────────────────────────────────────┘
+                                                   │
+                                                   ▼  [SQL Data Quality Audits & Transformation]
+┌─────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ SILVER SCHEMA (Cleaned & Standardized)                                                              │
+│   • Gender/Marital status normalization   • Cost/Price anomaly fixes   • Deduplicated surrogate keys    │
+└──────────────────────────────────────────────────┬──────────────────────────────────────────────────┘
+                                                   │
+                                                   ▼  [Dimensional Data Modeling]
+┌─────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ GOLD SCHEMA (Star Schema Data Warehouse)                                                            │
+│   • dim_customers   • dim_products   • fact_sales   • customer_rfm_base   • cohort_retention          │
+└────────┬─────────────────────────────────────────┬──────────────────────────────────────────────────┘
+         │                                         │
+         ▼                                         ▼
+┌───────────────────────────────────────┐ ┌──────────────────────────────────────────────────────────┐
+│ MACHINE LEARNING PIPELINE             │ │ ANALYTICAL QUERY ENGINE (DuckDB)                         │
+│ • K-Means RFM Clustering (K=4)        │ │ • Executive KPIs & Geographic Performance                │
+│ • BG/NBD & Gamma-Gamma CLV Prediction │ │ • Product Pareto 80/20 Concentration                     │
+│ • Cohort Retention Decay Matrix       │ │ • Monthly Sales Growth & Rolling Averages                │
+└──────────────────┬────────────────────┘ └────────────────────────────┬─────────────────────────────┘
+                   │                                                   │
+                   └───────────────────────┬───────────────────────────┘
+                                           │
+                                           ▼  [Static Export Pipeline: python/export_data.py]
+                            ┌─────────────────────────────┐
+                            │  JSON ANALYTICAL DATASETS   │
+                            │ (dashboard/public/data/*.json)│
+                            └──────────────┬──────────────┘
+                                           │
+                                           ▼
+                            ┌─────────────────────────────┐
+                            │ ENTERPRISE REACT DASHBOARD  │
+                            │  (Human-Designed UI/UX)     │
+                            └─────────────────────────────┘
 ```
+
+---
+
+## ✨ Key Platform Features
+
+* **Medallion Data Lakehouse:** Automated multi-stage SQL pipeline (`Bronze` $\rightarrow$ `Silver` $\rightarrow$ `Gold`) utilizing **DuckDB** for ultra-fast, local in-memory analytical processing.
+* **Automated Data Quality Audits:** Pre-ingestion validation checking for missing primary keys, duplicate records, invalid date bounds, and referential integrity mismatches.
+* **Dimensional Data Warehouse:** Star-schema architecture featuring central transaction table (`fact_sales`) joined with customer (`dim_customers`) and product (`dim_products`) dimensions.
+* **Machine Learning Customer Segmentation:**
+  * **RFM Base Feature Pre-computation:** Recency, Frequency, and Monetary feature extraction.
+  * **K-Means Clustering ($K=4$):** Evaluated via Silhouette Score ($0.602$) and 2D/3D Principal Component Analysis (PCA).
+  * **Behavioral Cohorts:** Champions, Loyal Core, At-Risk, and Hibernating customer segments.
+* **Probabilistic Predictive CLV:** **BG/NBD** (Beta-Geometric / Negative Binomial Distribution) transaction frequency modeling combined with **Gamma-Gamma** monetary value forecasting.
+* **Cohort Retention Analysis:** Full monthly acquisition matrix ($M_0 \dots M_{12}$) calculating re-engagement velocity and long-term customer decay rates.
+* **Human-Designed Enterprise UI/UX:**
+  * Built with React 19, Vite 8, Chart.js, and a bespoke light neutral design system.
+  * Information-dense layout inspired by enterprise products (Linear, Stripe, Vercel, Notion).
+  * 5 Dedicated Views: *Executive Overview*, *Product Pareto & Catalog*, *ML Segmentation & Playbooks*, *Cohort Retention Matrix*, and *Analytical Report & Findings*.
 
 ---
 
 ## 🛠️ Technology Stack
 
-| Component | Technology | Description |
-|---|---|---|
-| **Query Engine** | **DuckDB** | Columnar SQL database for local, high-speed analytical ETL. |
-| **Data Science** | **Python 3.12** | Feature scaling, clustering, and predictive CLV modeling. |
-| **ML Framework** | **Scikit-Learn** | K-Means clustering and Gradient Boosting Regressor. |
-| **Frontend App** | **React + Vite** | Modern SPA with custom glassmorphic styling (Vanilla CSS). |
-| **Charts** | **Chart.js** | Interactive line, bar, and doughnut visualizations. |
-| **DevOps** | **Docker** | Containerizes the dashboard using multi-stage builds. |
-| **Hosting** | **Vercel** | Serverless hosting directly via GitHub integration. |
+| Domain | Technology | Purpose |
+| :--- | :--- | :--- |
+| **SQL Engine** | **DuckDB** | Columnar analytical processing engine & local data warehouse storage. |
+| **Data Science & ML** | **Python 3.12 / Scikit-Learn** | Feature normalization, K-Means clustering, PCA, BG/NBD & Gamma-Gamma CLV. |
+| **Data Analysis** | **Pandas / NumPy** | Matrix transformations, cohort aggregations, and data validation. |
+| **Frontend UI** | **React 19 / Vite 8** | Modern single-page web application with modular React component architecture. |
+| **Visualization** | **Chart.js / React-Chartjs-2** | Custom interactive line charts, bar charts, and doughnut distribution charts. |
+| **DevOps & Container** | **Docker / Docker Compose** | Multi-stage Docker build served via Nginx web server. |
+| **Hosting** | **Vercel** | Serverless global CDN deployment with zero server maintenance overhead. |
 
 ---
 
 ## 📁 Repository Structure
 
 ```text
-data-analysis/
-│
+Retail-Customer-Intelligence/
 ├── data/
-│   ├── raw/                               <- Raw CRM and ERP CSV extracts
-│   └── processed/                         <- Local DuckDB database file
+│   ├── raw/                               <- Raw CRM & ERP CSV data extracts
+│   └── processed/                         <- DuckDB data warehouse binary (warehouse.db)
 │
-├── sql/                                   <- ETL and Analytical SQL scripts
-│   ├── 00_init_database.sql               <- DB Schemas and CSV load
-│   ├── 02_data_cleaning.sql               <- Silver layer cleaning
-│   ├── 03_data_modeling.sql               <- Gold star schema setup
-│   ├── 04_kpi_analysis.sql                <- Executive KPI calculations
-│   ├── 05_time_series_analysis.sql        <- Month-over-Month growth
-│   ├── 06_product_analysis.sql            <- Product category and Pareto (80/20)
-│   ├── 07_customer_analytics.sql          <- RFM base features view
-│   └── 08_cohort_retention.sql            <- Cohort retention matrix
+├── sql/                                   <- Medallion SQL ETL & Analytical Queries
+│   ├── 00_init_database.sql               <- Database schema setup & Bronze CSV loader
+│   ├── 01_data_quality_checks.sql         <- Data quality audit suite & anomaly detection
+│   ├── 02_data_cleaning.sql               <- Silver layer cleaning & transformations
+│   ├── 03_data_modeling.sql               <- Gold star schema setup (fact_sales, dim_*)
+│   ├── 04_kpi_analysis.sql                <- Executive KPI calculations & geographic breakdown
+│   ├── 05_time_series_analysis.sql        <- Monthly revenue growth & 3-month rolling averages
+│   ├── 06_product_analysis.sql            <- Product category analysis & Pareto 80/20 calculation
+│   ├── 07_customer_analytics.sql          <- RFM base feature pre-computation view
+│   └── 08_cohort_retention.sql            <- Acquisition cohort retention matrix view
 │
-├── python/                                <- Machine learning and automation
-│   ├── build_dw.py                        <- Pipeline orchestrator
-│   ├── run_sql.py                         <- SQL execution runner
-│   ├── export_data.py                     <- Queries database and writes JSON files
-│   ├── 02_rfm_scoring.ipynb               <- K-Means clustering notebook
-│   ├── 03_statistical_analysis.ipynb      <- T-Test/ANOVA statistical tests
-│   └── 04_predictive_clv.ipynb            <- ML-based CLV prediction
+├── python/                                <- Data Science & Pipeline Automation
+│   ├── build_dw.py                        <- End-to-end Medallion pipeline runner
+│   ├── run_sql.py                         <- SQL execution wrapper for DuckDB
+│   ├── export_data.py                     <- Queries Gold warehouse & exports JSON files
+│   ├── 02_rfm_scoring.ipynb               <- RFM scoring notebook & distribution visualization
+│   ├── 03_statistical_analysis.ipynb      <- K-Means clustering & PCA evaluation notebook
+│   └── 04_predictive_clv.ipynb            <- BG/NBD & Gamma-Gamma probabilistic CLV model
 │
-├── dashboard/                             <- React web application
-│   ├── src/                               <- React components and vanilla CSS
-│   ├── public/data/                       <- Exported analytical JSON files
-│   ├── Dockerfile                         <- Multi-stage container build
+├── dashboard/                             <- Enterprise React Web Dashboard
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── Header.jsx                 <- Top navigation bar & live DuckDB status badge
+│   │   │   ├── KpiSummary.jsx             <- Compact high-density KPI metrics strip
+│   │   │   ├── OverviewTab.jsx            <- Executive overview & monthly revenue trends
+│   │   │   ├── ProductParetoTab.jsx       <- Category breakdown & Pareto 80/20 table
+│   │   │   ├── CustomerSegmentationTab.jsx<- Segment selector & Strategy Playbooks
+│   │   │   ├── CohortRetentionTab.jsx     <- Cohort retention heatmap matrix
+│   │   │   ├── AnalyticalFindingsTab.jsx  <- Formal data science executive report view
+│   │   │   └── Icons.jsx                  <- Feather/Lucide SVG icon suite
+│   │   ├── App.jsx                        <- Main application entry component
+│   │   └── App.css                        <- Design system, color tokens & typography
+│   ├── public/data/                       <- Pre-computed analytical JSON datasets
+│   ├── Dockerfile                         <- Multi-stage Docker container specification
 │   └── package.json
 │
-├── docs/                                  <- Project reports and documentation
-│   ├── business_questions.md
-│   ├── data_dictionary.md
-│   └── business_report.md                 <- Actionable findings report
+├── docs/                                  <- Enterprise Documentation & Business Reports
+│   ├── business_questions.md              <- Strategic analytics question catalog
+│   ├── data_dictionary.md                 <- Enterprise data dictionary & schema mapping
+│   └── business_report.md                 <- Executive report with strategic recommendations
 │
-├── docker-compose.yml                     <- Launches local Docker dashboard
-└── requirements.txt                       <- Python dependencies
+├── docker-compose.yml                     <- Single-command Docker service deployment
+└── requirements.txt                       <- Python data science dependencies
 ```
 
 ---
 
-## ⚙️ Running Locally
+## ⚡ Quick Start Guide
 
-### 1. Database ETL Build
-Set up a Python virtual environment, install requirements, and run the pipeline runner. This will load the raw CSVs into DuckDB, run the cleaning SQL scripts, and compile the final Gold schemas:
+### 1. Environment Setup & Data Pipeline Execution
+Set up a Python 3.12 virtual environment and execute the full Medallion pipeline to build the database warehouse:
 
 ```bash
-# Create and activate virtual environment
+# Clone repository
+git clone https://github.com/kushchhabra0/Retail-Customer-Intelligence.git
+cd Retail-Customer-Intelligence
+
+# Create & activate virtual environment
 python -m venv .venv
 .venv\Scripts\activate      # Windows
-source .venv/bin/activate  # macOS/Linux
+source .venv/bin/activate  # macOS / Linux
 
 # Install dependencies
 pip install -r requirements.txt
 
-# Run the SQL ETL pipeline
+# Run the Medallion Data Warehouse build runner
 python python/build_dw.py
 ```
 
-### 2. Run Machine Learning & Export Datasets
-Execute the customer clustering and CLV scripts, then run the exporter to dump reporting queries to JSON files for the frontend:
+### 2. Export Analytical JSON Datasets
+Run the dataset exporter script to update pre-computed JSON files for the frontend dashboard:
 
 ```bash
-# Run clustering and CLV computations
-python scratch/run_clustering.py
-python scratch/run_clv.py
-
-# Export analytical tables to JSON
 python python/export_data.py
 ```
 
-### 3. Start React Dashboard
+### 3. Launch React Dashboard Locally
+Navigate to the `dashboard/` folder and start the Vite development server:
+
 ```bash
 cd dashboard
 npm install
 npm run dev
 ```
-Open [http://localhost:5173](http://localhost:5173) in your browser to view the interactive dashboard.
+Open [http://localhost:5173](http://localhost:5173) in your browser to view the platform.
 
 ---
 
-## 🐳 Running with Docker
+## 🐳 Docker Deployment
 
-You can compile the production dashboard assets and serve them inside an Nginx container using the root `docker-compose.yml` file:
+The project includes a multi-stage `Dockerfile` and `docker-compose.yml` configuration to compile the React application and serve production static assets using **Nginx**:
 
 ```bash
-# Spin up the containerized dashboard
+# Build and launch containerized platform
 docker-compose up --build
 ```
-The dashboard will start immediately on [http://localhost:8080](http://localhost:8080).
+Access the running application at [http://localhost:8080](http://localhost:8080).
 
 ---
 
-## ☁️ Deploying to Vercel (via Direct GitHub)
+## 📊 Key Business Findings & Executive Summary
 
-Since we export all query results to static JSON files in `dashboard/public/data/` during our local pipeline runs, the React dashboard operates fully client-side. This allows it to be hosted on Vercel for free with zero database hosting overhead.
-
-### Steps to Deploy:
-1. Push this workspace to your public or private **GitHub** repository.
-2. Log in to [Vercel](https://vercel.com) and click **"Add New Project"**.
-3. Select your repository from the Git integration list.
-4. **Configuration Settings**:
-   - **Framework Preset**: Select **Vite**.
-   - **Root Directory**: Select **`dashboard`** (Vercel will build and serve from this folder).
-   - **Build Command**: `npm run build` (default).
-   - **Output Directory**: `dist` (default).
-5. Click **"Deploy"**.
-6. Done! Vercel will build your React code and serve the dashboard globally on their CDN.
+* **Executive Revenue Performance:** Total enterprise revenue reached **$29.35M** across **27,659 orders** with an Average Order Value (AOV) of **$1,061**.
+* **Repeat Buyer Base:** **37.14%** of total purchasing accounts are repeat buyers (6,865 customers), providing a predictable baseline revenue stream.
+* **Pareto (80/20) Concentration:** Top **15 product SKUs (1.8% of product catalog)** generate **63.05% of total enterprise revenue**, with top 35 SKUs driving 80%. Prioritizing supply chain SLA for these key items prevents stockout losses.
+* **Regional Dominance:** The **United States ($9.16M)** and **Australia ($9.06M)** drive over 60% of total revenue. Australia exhibits the highest Average Order Value at **$1,348**.
+* **Segment Strategy & CLV:**
+  * **Champions (30% of accounts):** High recency and frequency; expected to generate **$3,926 12M CLV**.
+  * **At-Risk (13% of accounts):** Formerly active high spenders now dormant >90 days. Automated win-back discount flows can recover substantial high-margin revenue.
 
 ---
 
-## 📈 Key Business Insights & Recommendations
-Our analytical pipeline extracted the following key findings:
-- **Revenue Driver**: **Bikes** generate **96.4%** of total revenue. Accessories drive order counts but contribute minor sales value.
-- **Pareto Rule**: **26.9%** of products (35 items) drive **80%** of total revenue. Ensure these bike models never experience stockouts.
-- **Top Region**: The **United States** ($9.16M) and **Australia** ($9.06M) represent the primary revenue engines. Notably, Australia shows the highest purchase power ($1,348 AOV).
-- **Customer Segmentation**:
-  - **Champions** (5,608 customers): Low recency, high frequency, and high monetary spend. Focus on VIP rewards and early model releases.
-  - **At Risk** (2,459 customers): Unactive for >240 days. Trigger automatic discount campaigns to reactivate them before they churn.
+## 📄 License & Author
+
+This project is open-source under the [MIT License](LICENSE).  
+Created as an enterprise analytical portfolio demonstration by **Kushal Chhabra**.
