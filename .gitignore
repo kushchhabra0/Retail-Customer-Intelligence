@@ -1,12 +1,16 @@
 # Python virtual environment
 .venv/
+venv/
 __pycache__/
 *.pyc
 
 # Node dependencies and build
 node_modules/
+dashboard/node_modules/
 dist/
 dashboard/dist/
+.env
+.env.local
 
 # Databases and large datasets
 data/processed/*.db
