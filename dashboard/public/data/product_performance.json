@@ -1,0 +1,138 @@
+[
+  {
+    "category": "Bikes",
+    "subcategory": "Road Bikes",
+    "total_revenue": 14519438.0,
+    "total_quantity": 8068.0,
+    "total_orders": 8068,
+    "average_price": 1799.63
+  },
+  {
+    "category": "Bikes",
+    "subcategory": "Mountain Bikes",
+    "total_revenue": 9952254.0,
+    "total_quantity": 4970.0,
+    "total_orders": 4970,
+    "average_price": 2002.47
+  },
+  {
+    "category": "Bikes",
+    "subcategory": "Touring Bikes",
+    "total_revenue": 3844580.0,
+    "total_quantity": 2167.0,
+    "total_orders": 2167,
+    "average_price": 1774.15
+  },
+  {
+    "category": "Accessories",
+    "subcategory": "Tires and Tubes",
+    "total_revenue": 244582.0,
+    "total_quantity": 17336.0,
+    "total_orders": 9867,
+    "average_price": 14.11
+  },
+  {
+    "category": "Accessories",
+    "subcategory": "Helmets",
+    "total_revenue": 225435.0,
+    "total_quantity": 6441.0,
+    "total_orders": 6440,
+    "average_price": 35.0
+  },
+  {
+    "category": "Clothing",
+    "subcategory": "Jerseys",
+    "total_revenue": 172936.0,
+    "total_quantity": 3334.0,
+    "total_orders": 3332,
+    "average_price": 51.92
+  },
+  {
+    "category": "Clothing",
+    "subcategory": "Shorts",
+    "total_revenue": 71330.0,
+    "total_quantity": 1019.0,
+    "total_orders": 1019,
+    "average_price": 70.0
+  },
+  {
+    "category": "Accessories",
+    "subcategory": "Bottles and Cages",
+    "total_revenue": 56992.0,
+    "total_quantity": 7995.0,
+    "total_orders": 4768,
+    "average_price": 7.13
+  },
+  {
+    "category": "Accessories",
+    "subcategory": "Fenders",
+    "total_revenue": 46662.0,
+    "total_quantity": 2121.0,
+    "total_orders": 2121,
+    "average_price": 22.0
+  },
+  {
+    "category": "Accessories",
+    "subcategory": "Hydration Packs",
+    "total_revenue": 40315.0,
+    "total_quantity": 733.0,
+    "total_orders": 733,
+    "average_price": 55.0
+  },
+  {
+    "category": "Accessories",
+    "subcategory": "Bike Stands",
+    "total_revenue": 39591.0,
+    "total_quantity": 249.0,
+    "total_orders": 249,
+    "average_price": 159.0
+  },
+  {
+    "category": "Accessories",
+    "subcategory": "Bike Racks",
+    "total_revenue": 39360.0,
+    "total_quantity": 328.0,
+    "total_orders": 328,
+    "average_price": 120.0
+  },
+  {
+    "category": "Clothing",
+    "subcategory": "Vests",
+    "total_revenue": 35968.0,
+    "total_quantity": 565.0,
+    "total_orders": 562,
+    "average_price": 64.0
+  },
+  {
+    "category": "Clothing",
+    "subcategory": "Gloves",
+    "total_revenue": 34329.0,
+    "total_quantity": 1430.0,
+    "total_orders": 1430,
+    "average_price": 24.0
+  },
+  {
+    "category": "Clothing",
+    "subcategory": "Caps",
+    "total_revenue": 19710.0,
+    "total_quantity": 2190.0,
+    "total_orders": 2190,
+    "average_price": 9.0
+  },
+  {
+    "category": "Accessories",
+    "subcategory": "Cleaners",
+    "total_revenue": 7272.0,
+    "total_quantity": 909.0,
+    "total_orders": 908,
+    "average_price": 8.0
+  },
+  {
+    "category": "Clothing",
+    "subcategory": "Socks",
+    "total_revenue": 5112.0,
+    "total_quantity": 568.0,
+    "total_orders": 568,
+    "average_price": 9.0
+  }
+]

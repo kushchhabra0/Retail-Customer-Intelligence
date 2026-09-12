@@ -1,0 +1,162 @@
+[
+  {
+    "rank": 1,
+    "product_name": "Mountain-200 Black- 46",
+    "category": "Bikes",
+    "revenue": 1373454.0,
+    "pct_contribution": 4.68,
+    "cumulative_pct_contribution": 4.68
+  },
+  {
+    "rank": 2,
+    "product_name": "Mountain-200 Black- 42",
+    "category": "Bikes",
+    "revenue": 1363128.0,
+    "pct_contribution": 4.64,
+    "cumulative_pct_contribution": 9.32
+  },
+  {
+    "rank": 3,
+    "product_name": "Mountain-200 Silver- 38",
+    "category": "Bikes",
+    "revenue": 1339394.0,
+    "pct_contribution": 4.56,
+    "cumulative_pct_contribution": 13.88
+  },
+  {
+    "rank": 4,
+    "product_name": "Mountain-200 Silver- 46",
+    "category": "Bikes",
+    "revenue": 1301029.0,
+    "pct_contribution": 4.43,
+    "cumulative_pct_contribution": 18.32
+  },
+  {
+    "rank": 5,
+    "product_name": "Mountain-200 Black- 38",
+    "category": "Bikes",
+    "revenue": 1294854.0,
+    "pct_contribution": 4.41,
+    "cumulative_pct_contribution": 22.73
+  },
+  {
+    "rank": 6,
+    "product_name": "Mountain-200 Silver- 42",
+    "category": "Bikes",
+    "revenue": 1257368.0,
+    "pct_contribution": 4.28,
+    "cumulative_pct_contribution": 27.01
+  },
+  {
+    "rank": 7,
+    "product_name": "Road-150 Red- 48",
+    "category": "Bikes",
+    "revenue": 1205786.0,
+    "pct_contribution": 4.11,
+    "cumulative_pct_contribution": 31.12
+  },
+  {
+    "rank": 8,
+    "product_name": "Road-150 Red- 62",
+    "category": "Bikes",
+    "revenue": 1202208.0,
+    "pct_contribution": 4.1,
+    "cumulative_pct_contribution": 35.21
+  },
+  {
+    "rank": 9,
+    "product_name": "Road-150 Red- 52",
+    "category": "Bikes",
+    "revenue": 1080556.0,
+    "pct_contribution": 3.68,
+    "cumulative_pct_contribution": 38.89
+  },
+  {
+    "rank": 10,
+    "product_name": "Road-150 Red- 56",
+    "category": "Bikes",
+    "revenue": 1055510.0,
+    "pct_contribution": 3.6,
+    "cumulative_pct_contribution": 42.49
+  },
+  {
+    "rank": 11,
+    "product_name": "Road-150 Red- 44",
+    "category": "Bikes",
+    "revenue": 1005418.0,
+    "pct_contribution": 3.42,
+    "cumulative_pct_contribution": 45.91
+  },
+  {
+    "rank": 12,
+    "product_name": "Road-250 Black- 52",
+    "category": "Bikes",
+    "revenue": 734425.0,
+    "pct_contribution": 2.5,
+    "cumulative_pct_contribution": 48.42
+  },
+  {
+    "rank": 13,
+    "product_name": "Road-250 Red- 58",
+    "category": "Bikes",
+    "revenue": 702666.0,
+    "pct_contribution": 2.39,
+    "cumulative_pct_contribution": 50.81
+  },
+  {
+    "rank": 14,
+    "product_name": "Road-250 Black- 48",
+    "category": "Bikes",
+    "revenue": 691213.0,
+    "pct_contribution": 2.35,
+    "cumulative_pct_contribution": 53.16
+  },
+  {
+    "rank": 15,
+    "product_name": "Road-250 Black- 44",
+    "category": "Bikes",
+    "revenue": 628384.0,
+    "pct_contribution": 2.14,
+    "cumulative_pct_contribution": 55.31
+  },
+  {
+    "rank": 16,
+    "product_name": "Road-250 Black- 58",
+    "category": "Bikes",
+    "revenue": 622026.0,
+    "pct_contribution": 2.12,
+    "cumulative_pct_contribution": 57.42
+  },
+  {
+    "rank": 17,
+    "product_name": "Touring-1000 Blue- 46",
+    "category": "Bikes",
+    "revenue": 421968.0,
+    "pct_contribution": 1.44,
+    "cumulative_pct_contribution": 58.86
+  },
+  {
+    "rank": 18,
+    "product_name": "Road-350-W Yellow- 40",
+    "category": "Bikes",
+    "revenue": 418446.0,
+    "pct_contribution": 1.43,
+    "cumulative_pct_contribution": 60.29
+  },
+  {
+    "rank": 19,
+    "product_name": "Touring-1000 Yellow- 46",
+    "category": "Bikes",
+    "revenue": 410048.0,
+    "pct_contribution": 1.4,
+    "cumulative_pct_contribution": 61.68
+  },
+  {
+    "rank": 20,
+    "product_name": "Road-350-W Yellow- 42",
+    "category": "Bikes",
+    "revenue": 399735.0,
+    "pct_contribution": 1.36,
+    "cumulative_pct_contribution": 63.05
+  }
+]

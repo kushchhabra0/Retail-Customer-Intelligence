@@ -1,0 +1,34 @@
+[
+  {
+    "segment_name": "Champions",
+    "customer_count": 5608,
+    "avg_recency": 167.2,
+    "avg_frequency": 2.4,
+    "avg_spending": 4008.71,
+    "avg_clv": 3926.08
+  },
+  {
+    "segment_name": "Loyal Customers",
+    "customer_count": 3736,
+    "avg_recency": 276.4,
+    "avg_frequency": 1.0,
+    "avg_spending": 1571.98,
+    "avg_clv": 1694.3
+  },
+  {
+    "segment_name": "At Risk",
+    "customer_count": 2459,
+    "avg_recency": 37.7,
+    "avg_frequency": 1.3,
+    "avg_spending": 264.53,
+    "avg_clv": 260.42
+  },
+  {
+    "segment_name": "Low-Value / Occasional",
+    "customer_count": 6679,
+    "avg_recency": 215.0,
+    "avg_frequency": 1.1,
+    "avg_spending": 51.9,
+    "avg_clv": 56.43
+  }
+]

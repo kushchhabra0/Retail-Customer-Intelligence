@@ -1,0 +1,51 @@
+[
+  {
+    "country": "United States",
+    "total_orders": 9230,
+    "unique_customers": 7482,
+    "total_revenue": 9162054.0,
+    "average_order_value": 992.64
+  },
+  {
+    "country": "Australia",
+    "total_orders": 6718,
+    "unique_customers": 3591,
+    "total_revenue": 9060172.0,
+    "average_order_value": 1348.64
+  },
+  {
+    "country": "United Kingdom",
+    "total_orders": 3031,
+    "unique_customers": 1913,
+    "total_revenue": 3391328.0,
+    "average_order_value": 1118.88
+  },
+  {
+    "country": "Germany",
+    "total_orders": 2484,
+    "unique_customers": 1780,
+    "total_revenue": 2894016.0,
+    "average_order_value": 1165.06
+  },
+  {
+    "country": "France",
+    "total_orders": 2484,
+    "unique_customers": 1810,
+    "total_revenue": 2643788.0,
+    "average_order_value": 1064.33
+  },
+  {
+    "country": "Canada",
+    "total_orders": 3375,
+    "unique_customers": 1571,
+    "total_revenue": 1977688.0,
+    "average_order_value": 585.98
+  },
+  {
+    "country": "Unspecified",
+    "total_orders": 337,
+    "unique_customers": 337,
+    "total_revenue": 226820.0,
+    "average_order_value": 673.06
+  }
+]

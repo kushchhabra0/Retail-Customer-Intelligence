@@ -1,0 +1,11 @@
+[
+  {
+    "total_revenue": 29355866.0,
+    "total_orders": 27659,
+    "total_customers": 18484,
+    "average_order_value": 1061.35,
+    "average_revenue_per_customer": 1588.18,
+    "repeat_customers": 6865.0,
+    "repeat_rate_pct": 37.13999938964844
+  }
+]
