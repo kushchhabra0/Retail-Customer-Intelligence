@@ -1,0 +1,124 @@
+{
+  "name": "Retail Customer Intelligence",
+  "dataColors": [
+    "#264653",
+    "#2A9D8F",
+    "#E9C46A",
+    "#F4A261",
+    "#E76F51",
+    "#1B2A4A",
+    "#3D5A80",
+    "#457B9D",
+    "#A8DADC",
+    "#F1FAEE"
+  ],
+  "background": "#FAFAFA",
+  "foreground": "#2D3436",
+  "tableAccent": "#1B2A4A",
+  "good": "#2A9D8F",
+  "neutral": "#E9C46A",
+  "bad": "#E76F51",
+  "maximum": "#264653",
+  "center": "#E9C46A",
+  "minimum": "#E76F51",
+  "textClasses": {
+    "callout": {
+      "fontSize": 28,
+      "fontFace": "Segoe UI",
+      "color": "#1B2A4A"
+    },
+    "title": {
+      "fontSize": 20,
+      "fontFace": "Segoe UI",
+      "fontWeight": "Bold",
+      "color": "#1B2A4A"
+    },
+    "header": {
+      "fontSize": 14,
+      "fontFace": "Segoe UI",
+      "fontWeight": "SemiBold",
+      "color": "#2D3436"
+    },
+    "label": {
+      "fontSize": 10,
+      "fontFace": "Segoe UI",
+      "color": "#636E72"
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [
+          {
+            "color": { "solid": { "color": "#FFFFFF" } },
+            "transparency": 0
+          }
+        ],
+        "border": [
+          {
+            "color": { "solid": { "color": "#E8E8E8" } },
+            "show": true
+          }
+        ],
+        "outlineColor": [
+          { "solid": { "color": "#E8E8E8" } }
+        ],
+        "title": [
+          {
+            "fontFamily": "Segoe UI",
+            "fontSize": 12,
+            "fontColor": { "solid": { "color": "#2D3436" } },
+            "fontWeight": "SemiBold"
+          }
+        ]
+      }
+    },
+    "page": {
+      "*": {
+        "background": [
+          {
+            "color": { "solid": { "color": "#FAFAFA" } },
+            "transparency": 0
+          }
+        ]
+      }
+    },
+    "card": {
+      "*": {
+        "labels": [
+          {
+            "color": { "solid": { "color": "#1B2A4A" } },
+            "fontSize": 28,
+            "fontFamily": "Segoe UI"
+          }
+        ],
+        "categoryLabels": [
+          {
+            "color": { "solid": { "color": "#636E72" } },
+            "fontSize": 10,
+            "fontFamily": "Segoe UI"
+          }
+        ]
+      }
+    },
+    "slicer": {
+      "*": {
+        "header": [
+          {
+            "fontColor": { "solid": { "color": "#1B2A4A" } },
+            "fontFamily": "Segoe UI",
+            "fontSize": 11,
+            "fontWeight": "SemiBold"
+          }
+        ],
+        "items": [
+          {
+            "fontColor": { "solid": { "color": "#2D3436" } },
+            "fontFamily": "Segoe UI",
+            "fontSize": 10
+          }
+        ]
+      }
+    }
+  }
+}

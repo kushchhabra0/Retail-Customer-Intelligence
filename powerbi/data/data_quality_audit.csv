@@ -1,0 +1,25 @@
+audit_category,check_name,issue_count,status
+NULL,NULL: crm_cust_info.cst_id,3,FAIL
+NULL,NULL: crm_prd_info.prd_id,0,PASS
+NULL,NULL: crm_sales_details.sls_ord_num,0,PASS
+NULL,NULL: erp_cust_az12.cid,0,PASS
+DUPLICATE,DUPLICATE: crm_cust_info.cst_id,9,FAIL
+DUPLICATE,DUPLICATE: crm_prd_info.prd_key,102,FAIL
+DUPLICATE,DUPLICATE: erp_cust_az12.cid,0,PASS
+ANOMALY,ANOMALY: Negative Product Cost,0,PASS
+ANOMALY,ANOMALY: Start > End Date,200,FAIL
+ANOMALY,ANOMALY: Negative/Zero Sales,5,FAIL
+ANOMALY,ANOMALY: Negative/Zero Quantity,0,PASS
+ANOMALY,ANOMALY: Price Discrepancy,20,FAIL
+ANOMALY,ANOMALY: Future Birthdate,16,FAIL
+REF INTEGRITY,REF INTEGRITY: Sales→Customers,0,PASS
+REF INTEGRITY,REF INTEGRITY: Sales→Products,60398,FAIL
+ROW COUNT,ROW COUNT: bronze.crm_cust_info,18493,Bronze Layer
+ROW COUNT,ROW COUNT: bronze.crm_prd_info,397,Bronze Layer
+ROW COUNT,ROW COUNT: bronze.crm_sales_details,60398,Bronze Layer
+ROW COUNT,ROW COUNT: bronze.erp_cust_az12,18483,Bronze Layer
+ROW COUNT,ROW COUNT: bronze.erp_loc_a101,18484,Bronze Layer
+ROW COUNT,ROW COUNT: bronze.erp_px_cat_g1v2,37,Bronze Layer
+ROW COUNT,ROW COUNT: gold.dim_customers,18484,Gold Layer
+ROW COUNT,ROW COUNT: gold.dim_products,295,Gold Layer
+ROW COUNT,ROW COUNT: gold.fact_sales,60398,Gold Layer

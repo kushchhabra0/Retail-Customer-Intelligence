@@ -1,6 +1,7 @@
 # Retail Sales & Customer Intelligence Platform
 
 [![Live Demo](https://img.shields.io/badge/Live_Demo-Vercel-000000?style=flat-square&logo=vercel&logoColor=white)](https://retail-customer-intelligence-rho.vercel.app/)
+[![Power BI](https://img.shields.io/badge/BI-Power_BI_Desktop-F2C811?style=flat-square&logo=powerbi&logoColor=black)](powerbi/Retail_Customer_Intelligence.pbix)
 [![Python 3.12](https://img.shields.io/badge/Python-3.12-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
 [![DuckDB](https://img.shields.io/badge/Engine-DuckDB-FFF000?style=flat-square&logo=duckdb&logoColor=black)](https://duckdb.org/)
 [![React 19](https://img.shields.io/badge/Frontend-React_19-61DAFB?style=flat-square&logo=react&logoColor=black)](https://react.dev/)
@@ -8,7 +9,8 @@
 [![Docker](https://img.shields.io/badge/Container-Docker-2496ED?style=flat-square&logo=docker&logoColor=white)](https://www.docker.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.style=flat-square)](LICENSE)
 
-> 🌐 **Live Interactive Platform:** [retail-customer-intelligence-rho.vercel.app](https://retail-customer-intelligence-rho.vercel.app/)
+> 🌐 **Live Interactive Platform:** [retail-customer-intelligence-rho.vercel.app](https://retail-customer-intelligence-rho.vercel.app/)  
+> 📊 **Power BI Report:** [`powerbi/Retail_Customer_Intelligence.pbix`](powerbi/Retail_Customer_Intelligence.pbix)
 
 An enterprise-grade data engineering, machine learning, and business intelligence platform. This repository implements an end-to-end medallion data lakehouse pipeline—transforming raw CRM and ERP transactional data into a Gold star-schema warehouse, training unsupervised machine learning models for customer segmentation, forecasting 12-month Customer Lifetime Value (CLV), and presenting actionable insights via a human-designed enterprise analytics web dashboard.
 
@@ -87,12 +89,76 @@ An enterprise-grade data engineering, machine learning, and business intelligenc
 | Domain | Technology | Purpose |
 | :--- | :--- | :--- |
 | **SQL Engine** | **DuckDB** | Columnar analytical processing engine & local data warehouse storage. |
+| **Business Intelligence** | **Microsoft Power BI** | 5-page full-screen enterprise analytics dashboard with 32 DAX measures & star schema. |
 | **Data Science & ML** | **Python 3.12 / Scikit-Learn** | Feature normalization, K-Means clustering, PCA, BG/NBD & Gamma-Gamma CLV. |
 | **Data Analysis** | **Pandas / NumPy** | Matrix transformations, cohort aggregations, and data validation. |
 | **Frontend UI** | **React 19 / Vite 8** | Modern single-page web application with modular React component architecture. |
 | **Visualization** | **Chart.js / React-Chartjs-2** | Custom interactive line charts, bar charts, and doughnut distribution charts. |
 | **DevOps & Container** | **Docker / Docker Compose** | Multi-stage Docker build served via Nginx web server. |
 | **Hosting** | **Vercel** | Serverless global CDN deployment with zero server maintenance overhead. |
+
+---
+
+## 📊 Power BI Enterprise Analytics Suite
+
+In addition to the interactive web application, this repository includes an interview-ready, full-screen **Power BI Desktop Dashboard** ([`Retail_Customer_Intelligence.pbix`](powerbi/Retail_Customer_Intelligence.pbix)) connected directly to the Gold-layer dimensional model.
+
+The report features **32 DAX measures**, **star-schema relationships**, a custom enterprise color theme (`#004D40`, `#00796B`, `#FFB300`), and edge-to-edge 16:9 full-screen grid layouts across **5 dedicated pages**:
+
+### 1. Executive Sales Overview
+High-level strategic cockpit for C-suite leadership summarizing enterprise scale, time-series revenue trajectories, category contribution, and regional distribution.
+* **Top KPI Banners:** Total Revenue (**$29.35M**), Units Sold (**60K**), Average Order Value (**$1.06K**), Total Customer Accounts (**18K**).
+* **Visuals:** Full-width Monthly/Yearly Sales Trend line chart, Category Share Donut Chart, Regional Revenue by Country, Top Products by Revenue.
+
+![Executive Sales Overview](docs/screenshots/page_1_executive_overview.png)
+
+---
+
+### 2. Sales & Product Analysis
+Deep dive into product portfolio economics, pricing elasticity, and subcategory margins.
+* **Top KPI Banners:** Average Unit Price (**$485.91**), Gross Margin (**$11.68M**), Gross Margin % (**39.8%**), YoY Revenue Growth (**+112.4%**).
+* **Visuals:** Category Contribution Bar Chart, Subcategory Column Breakdown, Product Line Revenue Donut, Detailed Product Performance Matrix.
+
+![Sales and Product Analysis](docs/screenshots/page_2_sales_and_products.png)
+
+---
+
+### 3. Customer Analysis
+Comprehensive customer intelligence analyzing demographics, purchasing frequency, customer lifetime value, and geographic concentration.
+* **Top KPI Banners:** Total Customers (**18K**), New Customers (**18K**), Repeat Purchase Rate (**37.1%**), Customer Lifetime Value (**$1.59K**).
+* **Visuals:** Gender Distribution Donut, Revenue by Marital Status Column Chart, Customer Geographic Concentration by Country.
+
+![Customer Analysis](docs/screenshots/page_3_customer_analysis.png)
+
+---
+
+### 4. Operational Analysis
+Supply chain fulfillment speed, delivery lead times, and logistical efficiency tracking across global customer shipments.
+* **Top KPI Banners:** Avg Fulfillment Days (**7.0 Days**), Avg Delivery Lead Time (**12.0 Days**), On-Time Delivery Rate (**100.0%**), Orders Per Day (**24.5**).
+* **Visuals:** Monthly Lead & Fulfillment Time Trend, Delivery Lead Time by Country, Order-Level Fulfillment Tracking Table.
+
+![Operational Analysis](docs/screenshots/page_4_operational_analysis.png)
+
+---
+
+### 5. Data Quality & Pipeline Monitoring
+Complete visibility into Bronze $\rightarrow$ Silver $\rightarrow$ Gold DuckDB ETL audit results, data cleaning rules, and schema anomaly tracking.
+* **Top KPI Banners:** Total Audit Checks (**24**), Passed Checks (**7**), Failed Checks (**8**), Pass Rate % (**46.7%**), Total Issues Logged (**61K**).
+* **Visuals:** Issue Status by Pipeline Layer Donut, Audit Issues by Category Bar Chart, Live Pipeline Audit Check Log Table.
+
+![Data Quality and Pipeline Monitoring](docs/screenshots/page_5_data_quality_monitoring.png)
+
+---
+
+### Power BI Quick Start
+```bash
+# 1. Open the pre-built report in Power BI Desktop
+start powerbi/Retail_Customer_Intelligence.pbix
+
+# 2. To re-export the latest DuckDB Gold data to CSVs
+python python/export_powerbi.py
+```
+> **Tip for Presentation:** In Power BI Desktop, click **View → Full screen** (or collapse the Filters/Visualizations panes on the right) for an immersive full-screen presentation view.
 
 ---
 
@@ -140,10 +206,17 @@ Retail-Customer-Intelligence/
 │   ├── Dockerfile                         <- Multi-stage Docker container specification
 │   └── package.json
 │
+├── powerbi/                               <- Power BI Desktop Analytics Suite
+│   ├── Retail_Customer_Intelligence.pbix  <- Full-screen signed 5-page Power BI report
+│   ├── POWERBI_DASHBOARD_GUIDE.md         <- Comprehensive build & DAX documentation
+│   ├── retail_intelligence_theme.json     <- Custom enterprise color theme
+│   └── data/                              <- Gold-layer CSV extract files
+│
 ├── docs/                                  <- Enterprise Documentation & Business Reports
 │   ├── business_questions.md              <- Strategic analytics question catalog
 │   ├── data_dictionary.md                 <- Enterprise data dictionary & schema mapping
-│   └── business_report.md                 <- Executive report with strategic recommendations
+│   ├── business_report.md                 <- Executive report with strategic recommendations
+│   └── screenshots/                       <- Dashboard high-resolution gallery
 │
 ├── docker-compose.yml                     <- Single-command Docker service deployment
 └── requirements.txt                       <- Python data science dependencies
