@@ -10,77 +10,42 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.style=flat-square)](LICENSE)
 
 > 🌐 **Live Interactive Platform:** [retail-customer-intelligence-rho.vercel.app](https://retail-customer-intelligence-rho.vercel.app/)  
-> 📊 **Power BI Report:** [`powerbi/Retail_Customer_Intelligence.pbix`](powerbi/Retail_Customer_Intelligence.pbix)
+> 📊 **Power BI Report:** [`powerbi/Retail_Customer_Intelligence.pbix`](powerbi/Retail_Customer_Intelligence.pbix)  
+> 📖 **Interview Deep Dive:** [`docs/project_deep_dive.md`](docs/project_deep_dive.md)
 
-An enterprise-grade data engineering, machine learning, and business intelligence platform. This repository implements an end-to-end medallion data lakehouse pipeline—transforming raw CRM and ERP transactional data into a Gold star-schema warehouse, training unsupervised machine learning models for customer segmentation, forecasting 12-month Customer Lifetime Value (CLV), and presenting actionable insights via a human-designed enterprise analytics web dashboard.
+An enterprise-grade data engineering, machine learning, and business intelligence platform. This repository implements an end-to-end medallion data lakehouse pipeline—transforming raw CRM and ERP transactional data into a Gold star-schema warehouse, training unsupervised machine learning models for customer segmentation, forecasting 12-month Customer Lifetime Value (CLV), and delivering actionable insights via an interactive React web app and a 5-page Power BI executive suite.
 
 ---
 
 ## 🏛️ Medallion Architecture & Data Pipeline
 
 ```text
-                               ┌────────────────────────────────────────┐
-                               │   RAW DATA SOURCES (CRM & ERP CSVs)    │
-                               └───────────────────┬────────────────────┘
-                                                   │
-                                                   ▼
-┌─────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│ BRONZE SCHEMA (Ingestion)                                                                           │
-│   • crm_cust_info   • crm_prd_info   • crm_sales_details   • erp_cust_az12   • erp_loc_a101   • erp_px │
-└──────────────────────────────────────────────────┬──────────────────────────────────────────────────┘
-                                                   │
-                                                   ▼  [SQL Data Quality Audits & Transformation]
-┌─────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│ SILVER SCHEMA (Cleaned & Standardized)                                                              │
-│   • Gender/Marital status normalization   • Cost/Price anomaly fixes   • Deduplicated surrogate keys    │
-└──────────────────────────────────────────────────┬──────────────────────────────────────────────────┘
-                                                   │
-                                                   ▼  [Dimensional Data Modeling]
-┌─────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│ GOLD SCHEMA (Star Schema Data Warehouse)                                                            │
-│   • dim_customers   • dim_products   • fact_sales   • customer_rfm_base   • cohort_retention          │
-└────────┬─────────────────────────────────────────┬──────────────────────────────────────────────────┘
-         │                                         │
-         ▼                                         ▼
-┌───────────────────────────────────────┐ ┌──────────────────────────────────────────────────────────┐
-│ MACHINE LEARNING PIPELINE             │ │ ANALYTICAL QUERY ENGINE (DuckDB)                         │
-│ • K-Means RFM Clustering (K=4)        │ │ • Executive KPIs & Geographic Performance                │
-│ • BG/NBD & Gamma-Gamma CLV Prediction │ │ • Product Pareto 80/20 Concentration                     │
-│ • Cohort Retention Decay Matrix       │ │ • Monthly Sales Growth & Rolling Averages                │
-└──────────────────┬────────────────────┘ └────────────────────────────┬─────────────────────────────┘
-                   │                                                   │
-                   └───────────────────────┬───────────────────────────┘
-                                           │
-                                           ▼  [Static Export Pipeline: python/export_data.py]
-                            ┌─────────────────────────────┐
-                            │  JSON ANALYTICAL DATASETS   │
-                            │ (dashboard/public/data/*.json)│
-                            └──────────────┬──────────────┘
-                                           │
-                                           ▼
-                            ┌─────────────────────────────┐
-                            │ ENTERPRISE REACT DASHBOARD  │
-                            │  (Human-Designed UI/UX)     │
-                            └─────────────────────────────┘
+Raw Sources (CRM & ERP CSVs)
+   │
+   ▼
+[BRONZE] Raw Ingestion & Staging (crm_*, erp_*)
+   │
+   ▼  (SQL Data Quality Audits, Cleaning & Deduplication)
+[SILVER] Cleaned & Normalized Tables
+   │
+   ▼  (Dimensional Star-Schema Modeling)
+[GOLD] Star Schema Warehouse (dim_customers, dim_products, fact_sales)
+   ├──▶ Machine Learning: K-Means RFM (K=4) & BG/NBD + Gamma-Gamma CLV
+   ├──▶ Analytical Engine (DuckDB): KPIs, Pareto 80/20 & Cohort Retention
+   └──▶ Presentation Layer: Power BI Desktop Suite & Enterprise React 19 Dashboard
 ```
 
 ---
 
 ## ✨ Key Platform Features
 
-* **Medallion Data Lakehouse:** Automated multi-stage SQL pipeline (`Bronze` $\rightarrow$ `Silver` $\rightarrow$ `Gold`) utilizing **DuckDB** for ultra-fast, local in-memory analytical processing.
-* **Automated Data Quality Audits:** Pre-ingestion validation checking for missing primary keys, duplicate records, invalid date bounds, and referential integrity mismatches.
-* **Dimensional Data Warehouse:** Star-schema architecture featuring central transaction table (`fact_sales`) joined with customer (`dim_customers`) and product (`dim_products`) dimensions.
-* **Machine Learning Customer Segmentation:**
-  * **RFM Base Feature Pre-computation:** Recency, Frequency, and Monetary feature extraction.
-  * **K-Means Clustering ($K=4$):** Evaluated via Silhouette Score ($0.602$) and 2D/3D Principal Component Analysis (PCA).
-  * **Behavioral Cohorts:** Champions, Loyal Core, At-Risk, and Hibernating customer segments.
-* **Probabilistic Predictive CLV:** **BG/NBD** (Beta-Geometric / Negative Binomial Distribution) transaction frequency modeling combined with **Gamma-Gamma** monetary value forecasting.
-* **Cohort Retention Analysis:** Full monthly acquisition matrix ($M_0 \dots M_{12}$) calculating re-engagement velocity and long-term customer decay rates.
-* **Human-Designed Enterprise UI/UX:**
-  * Built with React 19, Vite 8, Chart.js, and a bespoke light neutral design system.
-  * Information-dense layout inspired by enterprise products (Linear, Stripe, Vercel, Notion).
-  * 5 Dedicated Views: *Executive Overview*, *Product Pareto & Catalog*, *ML Segmentation & Playbooks*, *Cohort Retention Matrix*, and *Analytical Report & Findings*.
+* **Medallion Data Lakehouse:** Automated multi-stage SQL pipeline (`Bronze` $\rightarrow$ `Silver` $\rightarrow$ `Gold`) utilizing **DuckDB** for fast in-memory analytical processing.
+* **Automated Data Quality Audits:** Pre-ingestion validation for primary keys, duplicates, date bounds, and referential integrity.
+* **Dimensional Data Warehouse:** Star-schema architecture with central transaction table (`fact_sales`) joined with customer and product dimensions.
+* **Machine Learning Customer Segmentation:** RFM feature extraction, K-Means clustering ($K=4$, Silhouette $0.602$, PCA evaluation), and behavioral playbooks (Champions, Loyal Core, At-Risk, Hibernating).
+* **Probabilistic Predictive CLV:** **BG/NBD** transaction frequency modeling paired with **Gamma-Gamma** monetary value forecasting.
+* **Cohort Retention Analysis:** Full monthly acquisition matrix ($M_0 \dots M_{12}$) calculating customer retention decay.
+* **Enterprise UI/UX:** React 19 single-page application with 5 analytical views, Chart.js visualizations, and a bespoke design system.
 
 ---
 
@@ -95,70 +60,26 @@ An enterprise-grade data engineering, machine learning, and business intelligenc
 | **Frontend UI** | **React 19 / Vite 8** | Modern single-page web application with modular React component architecture. |
 | **Visualization** | **Chart.js / React-Chartjs-2** | Custom interactive line charts, bar charts, and doughnut distribution charts. |
 | **DevOps & Container** | **Docker / Docker Compose** | Multi-stage Docker build served via Nginx web server. |
-| **Hosting** | **Vercel** | Serverless global CDN deployment with zero server maintenance overhead. |
+| **Hosting** | **Vercel** | Serverless global CDN deployment. |
 
 ---
 
 ## 📊 Power BI Enterprise Analytics Suite
 
-In addition to the interactive web application, this repository includes an interview-ready, full-screen **Power BI Desktop Dashboard** ([`Retail_Customer_Intelligence.pbix`](powerbi/Retail_Customer_Intelligence.pbix)) connected directly to the Gold-layer dimensional model.
-
-The report features **32 DAX measures**, **star-schema relationships**, a custom enterprise color theme (`#004D40`, `#00796B`, `#FFB300`), and edge-to-edge 16:9 full-screen grid layouts across **5 dedicated pages**:
-
 ### 1. Executive Sales Overview
-High-level strategic cockpit for C-suite leadership summarizing enterprise scale, time-series revenue trajectories, category contribution, and regional distribution.
-* **Top KPI Banners:** Total Revenue (**$29.35M**), Units Sold (**60K**), Average Order Value (**$1.06K**), Total Customer Accounts (**18K**).
-* **Visuals:** Full-width Monthly/Yearly Sales Trend line chart, Category Share Donut Chart, Regional Revenue by Country, Top Products by Revenue.
-
 ![Executive Sales Overview](docs/screenshots/page_1_executive_overview.png)
 
----
-
 ### 2. Sales & Product Analysis
-Deep dive into product portfolio economics, pricing elasticity, and subcategory margins.
-* **Top KPI Banners:** Average Unit Price (**$485.91**), Gross Margin (**$11.68M**), Gross Margin % (**39.8%**), YoY Revenue Growth (**+112.4%**).
-* **Visuals:** Category Contribution Bar Chart, Subcategory Column Breakdown, Product Line Revenue Donut, Detailed Product Performance Matrix.
-
 ![Sales and Product Analysis](docs/screenshots/page_2_sales_and_products.png)
 
----
-
 ### 3. Customer Analysis
-Comprehensive customer intelligence analyzing demographics, purchasing frequency, customer lifetime value, and geographic concentration.
-* **Top KPI Banners:** Total Customers (**18K**), New Customers (**18K**), Repeat Purchase Rate (**37.1%**), Customer Lifetime Value (**$1.59K**).
-* **Visuals:** Gender Distribution Donut, Revenue by Marital Status Column Chart, Customer Geographic Concentration by Country.
-
 ![Customer Analysis](docs/screenshots/page_3_customer_analysis.png)
 
----
-
 ### 4. Operational Analysis
-Supply chain fulfillment speed, delivery lead times, and logistical efficiency tracking across global customer shipments.
-* **Top KPI Banners:** Avg Fulfillment Days (**7.0 Days**), Avg Delivery Lead Time (**12.0 Days**), On-Time Delivery Rate (**100.0%**), Orders Per Day (**24.5**).
-* **Visuals:** Monthly Lead & Fulfillment Time Trend, Delivery Lead Time by Country, Order-Level Fulfillment Tracking Table.
-
 ![Operational Analysis](docs/screenshots/page_4_operational_analysis.png)
 
----
-
 ### 5. Data Quality & Pipeline Monitoring
-Complete visibility into Bronze $\rightarrow$ Silver $\rightarrow$ Gold DuckDB ETL audit results, data cleaning rules, and schema anomaly tracking.
-* **Top KPI Banners:** Total Audit Checks (**24**), Passed Checks (**7**), Failed Checks (**8**), Pass Rate % (**46.7%**), Total Issues Logged (**61K**).
-* **Visuals:** Issue Status by Pipeline Layer Donut, Audit Issues by Category Bar Chart, Live Pipeline Audit Check Log Table.
-
 ![Data Quality and Pipeline Monitoring](docs/screenshots/page_5_data_quality_monitoring.png)
-
----
-
-### Power BI Quick Start
-```bash
-# 1. Open the pre-built report in Power BI Desktop
-start powerbi/Retail_Customer_Intelligence.pbix
-
-# 2. To re-export the latest DuckDB Gold data to CSVs
-python python/export_powerbi.py
-```
-> **Tip for Presentation:** In Power BI Desktop, click **View → Full screen** (or collapse the Filters/Visualizations panes on the right) for an immersive full-screen presentation view.
 
 ---
 
@@ -166,126 +87,53 @@ python python/export_powerbi.py
 
 ```text
 Retail-Customer-Intelligence/
-├── data/
-│   ├── raw/                               <- Raw CRM & ERP CSV data extracts
-│   └── processed/                         <- DuckDB data warehouse binary (warehouse.db)
-│
-├── sql/                                   <- Medallion SQL ETL & Analytical Queries
-│   ├── 00_init_database.sql               <- Database schema setup & Bronze CSV loader
-│   ├── 01_data_quality_checks.sql         <- Data quality audit suite & anomaly detection
-│   ├── 02_data_cleaning.sql               <- Silver layer cleaning & transformations
-│   ├── 03_data_modeling.sql               <- Gold star schema setup (fact_sales, dim_*)
-│   ├── 04_kpi_analysis.sql                <- Executive KPI calculations & geographic breakdown
-│   ├── 05_time_series_analysis.sql        <- Monthly revenue growth & 3-month rolling averages
-│   ├── 06_product_analysis.sql            <- Product category analysis & Pareto 80/20 calculation
-│   ├── 07_customer_analytics.sql          <- RFM base feature pre-computation view
-│   └── 08_cohort_retention.sql            <- Acquisition cohort retention matrix view
-│
-├── python/                                <- Data Science & Pipeline Automation
-│   ├── build_dw.py                        <- End-to-end Medallion pipeline runner
-│   ├── run_sql.py                         <- SQL execution wrapper for DuckDB
-│   ├── export_data.py                     <- Queries Gold warehouse & exports JSON files
-│   ├── 02_rfm_scoring.ipynb               <- RFM scoring notebook & distribution visualization
-│   ├── 03_statistical_analysis.ipynb      <- K-Means clustering & PCA evaluation notebook
-│   └── 04_predictive_clv.ipynb            <- BG/NBD & Gamma-Gamma probabilistic CLV model
-│
-├── dashboard/                             <- Enterprise React Web Dashboard
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── Header.jsx                 <- Top navigation bar & live DuckDB status badge
-│   │   │   ├── KpiSummary.jsx             <- Compact high-density KPI metrics strip
-│   │   │   ├── OverviewTab.jsx            <- Executive overview & monthly revenue trends
-│   │   │   ├── ProductParetoTab.jsx       <- Category breakdown & Pareto 80/20 table
-│   │   │   ├── CustomerSegmentationTab.jsx<- Segment selector & Strategy Playbooks
-│   │   │   ├── CohortRetentionTab.jsx     <- Cohort retention heatmap matrix
-│   │   │   ├── AnalyticalFindingsTab.jsx  <- Formal data science executive report view
-│   │   │   └── Icons.jsx                  <- Feather/Lucide SVG icon suite
-│   │   ├── App.jsx                        <- Main application entry component
-│   │   └── App.css                        <- Design system, color tokens & typography
-│   ├── public/data/                       <- Pre-computed analytical JSON datasets
-│   ├── Dockerfile                         <- Multi-stage Docker container specification
-│   └── package.json
-│
-├── powerbi/                               <- Power BI Desktop Analytics Suite
-│   ├── Retail_Customer_Intelligence.pbix  <- Full-screen signed 5-page Power BI report
-│   ├── POWERBI_DASHBOARD_GUIDE.md         <- Comprehensive build & DAX documentation
-│   ├── retail_intelligence_theme.json     <- Custom enterprise color theme
-│   └── data/                              <- Gold-layer CSV extract files
-│
-├── docs/                                  <- Enterprise Documentation & Business Reports
-│   ├── business_questions.md              <- Strategic analytics question catalog
-│   ├── data_dictionary.md                 <- Enterprise data dictionary & schema mapping
-│   ├── business_report.md                 <- Executive report with strategic recommendations
-│   └── screenshots/                       <- Dashboard high-resolution gallery
-│
-├── docker-compose.yml                     <- Single-command Docker service deployment
-└── requirements.txt                       <- Python data science dependencies
+├── data/              <- Raw CRM/ERP extracts & processed DuckDB warehouse
+├── sql/               <- Medallion SQL pipeline (00_init through 08_cohort_retention)
+├── python/            <- ML models (K-Means, BG/NBD CLV) & pipeline automation
+├── dashboard/         <- Enterprise React 19 + Vite analytics web application
+│   ├── src/           <- Modular React components, design system & charts
+│   └── public/data/   <- Pre-computed analytical JSON datasets
+├── powerbi/           <- 5-page Power BI report (.pbix), DAX guide & theme
+├── docs/              <- Project deep dive, data dictionary & business findings
+├── docker-compose.yml <- Containerized deployment configuration
+└── requirements.txt   <- Python data science dependencies
 ```
 
 ---
 
-## ⚡ Quick Start Guide
-
-### 1. Environment Setup & Data Pipeline Execution
-Set up a Python 3.12 virtual environment and execute the full Medallion pipeline to build the database warehouse:
+## ⚡ Quick Start
 
 ```bash
-# Clone repository
+# 1. Clone repository & install dependencies
 git clone https://github.com/kushchhabra0/Retail-Customer-Intelligence.git
 cd Retail-Customer-Intelligence
-
-# Create & activate virtual environment
-python -m venv .venv
-.venv\Scripts\activate      # Windows
-source .venv/bin/activate  # macOS / Linux
-
-# Install dependencies
+python -m venv .venv && source .venv/bin/activate  # or .venv\Scripts\activate on Windows
 pip install -r requirements.txt
 
-# Run the Medallion Data Warehouse build runner
+# 2. Build Medallion Data Warehouse & export analytical datasets
 python python/build_dw.py
-```
-
-### 2. Export Analytical JSON Datasets
-Run the dataset exporter script to update pre-computed JSON files for the frontend dashboard:
-
-```bash
 python python/export_data.py
+
+# 3. Launch React Dashboard locally (http://localhost:5173)
+cd dashboard && npm install && npm run dev
 ```
 
-### 3. Launch React Dashboard Locally
-Navigate to the `dashboard/` folder and start the Vite development server:
-
+### Docker Deployment
 ```bash
-cd dashboard
-npm install
-npm run dev
+docker-compose up --build  # Access at http://localhost:8080
 ```
-Open [http://localhost:5173](http://localhost:5173) in your browser to view the platform.
-
----
-
-## 🐳 Docker Deployment
-
-The project includes a multi-stage `Dockerfile` and `docker-compose.yml` configuration to compile the React application and serve production static assets using **Nginx**:
-
-```bash
-# Build and launch containerized platform
-docker-compose up --build
-```
-Access the running application at [http://localhost:8080](http://localhost:8080).
 
 ---
 
 ## 📊 Key Business Findings & Executive Summary
 
-* **Executive Revenue Performance:** Total enterprise revenue reached **$29.35M** across **27,659 orders** with an Average Order Value (AOV) of **$1,061**.
-* **Repeat Buyer Base:** **37.14%** of total purchasing accounts are repeat buyers (6,865 customers), providing a predictable baseline revenue stream.
-* **Pareto (80/20) Concentration:** Top **15 product SKUs (1.8% of product catalog)** generate **63.05% of total enterprise revenue**, with top 35 SKUs driving 80%. Prioritizing supply chain SLA for these key items prevents stockout losses.
-* **Regional Dominance:** The **United States ($9.16M)** and **Australia ($9.06M)** drive over 60% of total revenue. Australia exhibits the highest Average Order Value at **$1,348**.
+* **Executive Revenue:** Total enterprise revenue reached **$29.35M** across **27,659 orders** with an AOV of **$1,061**.
+* **Repeat Buyer Base:** **37.14%** repeat buyer rate (6,865 customers) provides a predictable baseline revenue stream.
+* **Pareto (80/20) Concentration:** Top **15 product SKUs (1.8% of catalog)** generate **63.05% of total enterprise revenue**; top 35 SKUs generate 80%.
+* **Regional Dominance:** The **United States ($9.16M)** and **Australia ($9.06M)** drive over 60% of total revenue. Australia has the highest AOV at **$1,348**.
 * **Segment Strategy & CLV:**
-  * **Champions (30% of accounts):** High recency and frequency; expected to generate **$3,926 12M CLV**.
-  * **At-Risk (13% of accounts):** Formerly active high spenders now dormant >90 days. Automated win-back discount flows can recover substantial high-margin revenue.
+  * **Champions (30% of accounts):** Expected 12M CLV of **$3,926**.
+  * **At-Risk (13% of accounts):** Dormant >90 days; automated win-back workflows can recover substantial high-margin revenue.
 
 ---
 
