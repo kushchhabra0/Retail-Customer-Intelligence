@@ -11,7 +11,7 @@
 
 > 🌐 **Live Interactive Platform:** [retail-customer-intelligence-rho.vercel.app](https://retail-customer-intelligence-rho.vercel.app/)  
 > 📊 **Power BI Report:** [`powerbi/Retail_Customer_Intelligence.pbix`](powerbi/Retail_Customer_Intelligence.pbix)  
-> 📖 **Interview Deep Dive:** [`docs/project_deep_dive.md`](docs/project_deep_dive.md)
+
 
 An enterprise-grade data engineering, machine learning, and business intelligence platform. This repository implements an end-to-end medallion data lakehouse pipeline—transforming raw CRM and ERP transactional data into a Gold star-schema warehouse, training unsupervised machine learning models for customer segmentation, forecasting 12-month Customer Lifetime Value (CLV), and delivering actionable insights via an interactive React web app and a 5-page Power BI executive suite.
 
